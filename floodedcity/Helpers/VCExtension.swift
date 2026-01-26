@@ -99,9 +99,9 @@ extension ViewController {
             guard let self = self else { return }
 //old
 //            let poiLocations = await POIRequest().makeRequest(minLat: minLat, maxLat: maxLat, minLon: minLon, maxLon: maxLon)
-
+            // cache POI once on each launch, content doesn't change much, could also move to static json
             await fetchPOIAndCache.populateCache()
-            let poiLocations = fetchPOIAndCache.getPOI(minLat: minLat, maxLat: maxLat, minLon: minLon, maxLon: maxLon)
+            let poiLocations = await fetchPOIAndCache.getPOI(minLat: minLat, maxLat: maxLat, minLon: minLon, maxLon: maxLon)
             // Remove existing annotations before adding new ones
             let existingAnnotations = self.mapView.annotations
             self.mapView.removeAnnotations(existingAnnotations)

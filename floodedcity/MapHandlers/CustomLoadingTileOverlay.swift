@@ -23,7 +23,7 @@ class CustomLoadingTileOverlay: MKTileOverlay {
         let result = try await urlSession.data(from: urlToLoad)
         let mapTileData = result.0
 //      really hacky way to handle slow connections
-        usleep(100_000)
+        usleep(500_000)
         return mapTileData
     }
 }

@@ -1,9 +1,10 @@
 import Foundation
 import SwiftyJSON
 
+//TODO: move to built in decoder, SwiftyJSON is great, but is too heavy to just pull one string from the returned data
 class SeaLevelsFactsRequest {
     func makeRequest(seaLevel: Int) async -> String {
-        let url = URL(string: "https://flooded.city:8084/SeaLevelFacts/" + String(seaLevel))!
+        let url = URL(string: "\(AppConstants.factsEndpoint)\(seaLevel)")!
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let json = JSON(data)

@@ -42,6 +42,7 @@ enum Shape: String, Codable {
     case point = "Point"
 }
 
+// TODO: warnings here due to case length, should probably tidy this up at some point. Is still understandable, and currently only two cases used (C for cities and E for environments)
 enum TypeEnum: String, Codable {
     case a = "A"
     case c = "C"
