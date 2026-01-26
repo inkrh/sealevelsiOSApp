@@ -1,15 +1,7 @@
 import MapKit
 
 extension ViewController {
-
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        // Provide a default renderer for overlays; extend as needed for specific overlay types.
-        if let tileOverlay = overlay as? MKTileOverlay {
-            return MKTileOverlayRenderer(tileOverlay: tileOverlay)
-        }
-        return MKOverlayRenderer(overlay: overlay)
-    }
-
+// MARK: POI annotations
     private func _buildPOIView(for annotation: MKAnnotation, on mapView: MKMapView) -> MKAnnotationView? {
         // Do not customize user location annotation
         if annotation is MKUserLocation {
@@ -27,7 +19,7 @@ extension ViewController {
                 view?.annotation = cluster
             }
             view?.displayPriority = .required
-            view?.image = UIImage(named: "group")
+            view?.image = UIImage(named: "m3")
             return view
         }
 

@@ -9,14 +9,14 @@ class ViewController: UIViewController, MKMapViewDelegate {
     // privacy policy
     @IBOutlet weak var privacyBtn: UIButton!
     @IBAction func showPrivacyPolicy(sender: UIButton) {
-        let url = URL(string: "https://www.flooded.city/sealevels/privacy/")!
+        let url = URL(string: "\(AppConstants.baseURL)/privacy/")!
         UIApplication.shared.open(url)
     }
     
     // flooded.city
     @IBOutlet weak var floodedCityBtn: UIButton!
     @IBAction func showFloodedCity(sender: UIButton) {
-        let url = URL(string: "https://www.flooded.city")!
+        let url = URL(string: AppConstants.baseURL)!
         UIApplication.shared.open(url)
     }
     
@@ -100,8 +100,10 @@ class ViewController: UIViewController, MKMapViewDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        loadMapcenterCoordinate()
         displaySeaLevelsMap()
+        fetchAndShowPOIsForVisibleRegion()
+        loadMapcenterCoordinate()
+        
     }
 
     override func viewDidDisappear(_ animated: Bool) {
