@@ -5,6 +5,7 @@ class POIAnnotationView: MKAnnotationView {}
 
 class ViewController: UIViewController, MKMapViewDelegate {
     let fetchPOIAndCache = FetchPOI.shared
+    var poiShowing = false
     
     // privacy policy
     @IBOutlet weak var privacyBtn: UIButton!
@@ -18,6 +19,12 @@ class ViewController: UIViewController, MKMapViewDelegate {
     @IBAction func showFloodedCity(sender: UIButton) {
         let url = URL(string: AppConstants.baseURL)!
         UIApplication.shared.open(url)
+    }
+    
+    @IBOutlet weak var showPOIBtn: UIButton!
+    @IBAction func showPOI(sender: UIButton) {
+        poiShowing = !poiShowing
+        fetchAndShowPOIsForVisibleRegion()
     }
     
     // sealevel control
@@ -93,17 +100,14 @@ class ViewController: UIViewController, MKMapViewDelegate {
         mapView.cameraZoomRange = MKMapView.CameraZoomRange(
                     minCenterCoordinateDistance: 30000, // Minimum zoom value
                     maxCenterCoordinateDistance: 10000000) // Max zoom value
-        
         mapView.setRegion(initialRegion, animated: true)
-        
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         displaySeaLevelsMap()
-        fetchAndShowPOIsForVisibleRegion()
         loadMapcenterCoordinate()
-        
+        fetchAndShowPOIsForVisibleRegion()
     }
 
     override func viewDidDisappear(_ animated: Bool) {

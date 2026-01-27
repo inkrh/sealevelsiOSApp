@@ -74,6 +74,12 @@ extension ViewController {
     }
     
     func fetchAndShowPOIsForVisibleRegion() {
+        // Remove existing annotations before adding new ones
+        // don't worry about adding new ones if poiShowing is false
+        let existingAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(existingAnnotations)
+        if !poiShowing { return }
+        
         // Throttle requests to avoid spamming during pans/zooms
         let now = Date()
         guard now.timeIntervalSince(lastPOIFetchTime) > poiFetchThrottle else { return }
@@ -91,12 +97,9 @@ extension ViewController {
             guard let self = self else { return }
 //old
 //            let poiLocations = await POIRequest().makeRequest(minLat: minLat, maxLat: maxLat, minLon: minLon, maxLon: maxLon)
-            // cache POI once on each launch, content doesn't change much, could also move to static json
+            // cache POI once on each launch of app, content doesn't change much, could also move to static json
             await fetchPOIAndCache.populateCache()
             let poiLocations = await fetchPOIAndCache.getPOI(minLat: minLat, maxLat: maxLat, minLon: minLon, maxLon: maxLon)
-            // Remove existing annotations before adding new ones
-            let existingAnnotations = self.mapView.annotations
-            self.mapView.removeAnnotations(existingAnnotations)
             var newAnnotations: [MKAnnotation] = []
             for poi in poiLocations.locations {
                 let annotation = POIAnnotation(

@@ -67,19 +67,27 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" id="Sig-Yk-FUg">
-                                <rect key="frame" x="271" y="672" width="96" height="106"/>
+                                <rect key="frame" x="263" y="640" width="96" height="149"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rwO-b6-MGZ" userLabel="seaLevelsSite">
-                                        <rect key="frame" x="11" y="0.0" width="74" height="64"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rwO-b6-MGZ" userLabel="showPOI">
+                                        <rect key="frame" x="20.666666666666671" y="0.0" width="55" height="51.666666666666664"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="poi"/>
+                                        <connections>
+                                            <action selector="showPOIWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RNe-95-Tws"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mj5-Os-vKw" userLabel="seaLevelsSite">
+                                        <rect key="frame" x="11" y="51.666666666666657" width="74" height="64"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="InAppIcon"/>
                                         <connections>
-                                            <action selector="showFloodedCityWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hIl-cd-UAJ"/>
+                                            <action selector="showFloodedCityWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bd8-Wr-xcD"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DYe-Un-SeO">
-                                        <rect key="frame" x="8" y="72.666666666666671" width="80" height="33.333333333333329"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DYe-Un-SeO">
+                                        <rect key="frame" x="8" y="115.66666666666667" width="80" height="33.333333333333329"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Privacy">
                                             <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="16"/>
@@ -119,6 +127,7 @@
     </scenes>
     <resources>
         <image name="InAppIcon" width="50" height="50"/>
+        <image name="poi" width="31" height="41"/>
         <image name="sealevelsDownBtnImage" width="50" height="50"/>
         <image name="sealevelsUpBtnImage" width="50" height="50"/>
         <systemColor name="darkTextColor">
