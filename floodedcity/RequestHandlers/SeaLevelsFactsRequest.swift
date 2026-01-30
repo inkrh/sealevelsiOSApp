@@ -7,7 +7,7 @@ class SeaLevelsFactsRequest {
             let (data, _) = try await URLSession.shared.data(from: url)
             
             let json = try JSONDecoder().decode(SeaLevelFactsModel.self, from: data)
-            let fact = json.seaLevelFacts[0].fact
+            let fact = json.seaLevelFacts.first?.fact ?? ""
             return fact
         } catch {
             // Log and return empty string on any failure
@@ -16,3 +16,4 @@ class SeaLevelsFactsRequest {
         }
     }
 }
+
