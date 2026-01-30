@@ -62,14 +62,12 @@ extension ViewController {
     
     //tile loading error handling
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-//        print("Map tiles finished loading for the current view.")
-        // Perform actions here, e.g., show annotations or hide a loading indicator.
+        //TODO: When fails this is being triggered, without hitting didFail
+        //Fix by handling in CustomLoadingTileOverlay - check pending queue?
         loadingIndicator.stopAnimating()
     }
 
     func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
-//        print("Map is starting to load tiles.")
-        // Show a loading indicator.
         ensureLoadingIndicatorAdded()
         loadingIndicator.startAnimating()
     }
@@ -78,21 +76,10 @@ extension ViewController {
         print("Map failed to load with error: \(error.localizedDescription)")
         loadingIndicator.stopAnimating()
         
-        //TODO: refresh button to attempt reload - failing without actual error
+        //TODO: refresh button to attempt reload? Failing without actual error
+        //this isn't being hit on initial load error?
+        //server logs show all calls received succeeding, probably timing with presentation?
         
-        //Likely timeout, but server logs show all calls received succeeding, probably timing with presentation layer being visible rather than server?
-        //Might be down to Apple's internal networking handling - logs show socket failure, so failing before it reaches server == timing?
-        //Might also be down to using a non-standard port
-        
-        //Both of these attempts fail silently
-        //1
-//        displaySeaLevelsMap()
-        //2
-//        if let overlay = self.mapView.overlays.first(where: { $0 is MKTileOverlay }) as? MKTileOverlay {
-//            if let renderer = self.mapView.renderer(for: overlay) as? MKTileOverlayRenderer {
-//                renderer.reloadData()
-//            }
-//        }
 
     }
 

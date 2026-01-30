@@ -14,7 +14,9 @@ class CustomLoadingTileOverlay: MKTileOverlay {
         let config = URLSessionConfiguration.default
         config.httpShouldUsePipelining = true
         config.httpMaximumConnectionsPerHost = 6
-        config.urlCache = URLCache(memoryCapacity: 100_000, diskCapacity: 512_000_000)
+        let memCache = 10*1024*1024 //10MB
+        let diskCapacity = 512*1024*1024 //512MB
+        config.urlCache = URLCache(memoryCapacity: memCache, diskCapacity: diskCapacity)
         urlSession = URLSession(configuration: config)
     }
 
@@ -24,8 +26,6 @@ class CustomLoadingTileOverlay: MKTileOverlay {
         do {
             let result: (Data, URLResponse) = try await urlSession.data(from: urlToLoad)
             let mapTileData = result.0
-            //      really hacky way to handle slow connections
-//            usleep(500_000)
             //bug hunting
             if let httpResponse = result.1 as? HTTPURLResponse,
                !(200...299).contains(httpResponse.statusCode) {
@@ -33,15 +33,12 @@ class CustomLoadingTileOverlay: MKTileOverlay {
             }
             
             return mapTileData
-        } catch  let urlError as URLError {
+        } catch let urlError as URLError {
             print("URLError \(urlError.localizedDescription)")
+            throw urlError
         } catch {
             print("Other error: \(error.localizedDescription)")
+            throw error
         }
-        //temporary while I look at it - results in infinite loop if fails
-        //but is only failing once and succeeding until map is moved? and
-        //the logs show this isn't even being hit?
-        //possible is all down to server bandwidth, refusing multiple connections before it gets to server-side logging?
-        return try await loadTile(at: path)
     }
 }
