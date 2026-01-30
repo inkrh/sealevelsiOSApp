@@ -6,7 +6,7 @@ actor FetchPOI {
         }
     }
 
-    var cachedData: POILocations = POILocations(locations: [])
+    var cachedData: POILocationsModel = POILocationsModel(locations: [])
 
     func populateCache() async {
         // if anything already cached use that, not ideal but doesn't change much
@@ -20,13 +20,13 @@ actor FetchPOI {
         cachedData = await fetchData(minLat: -90, maxLat: 90, minLon: -180, maxLon: 180)
     }
 
-    func getPOI(minLat: Double, maxLat: Double, minLon: Double, maxLon: Double) -> POILocations {
+    func getPOI(minLat: Double, maxLat: Double, minLon: Double, maxLon: Double) -> POILocationsModel {
         // filtering for presentation
         let filteredPOILcations = cachedData.locations.filter{$0.lat >= minLat && $0.lat <= maxLat && $0.lon >= minLon && $0.lon <= maxLon}
-        return POILocations(locations: filteredPOILcations)
+        return POILocationsModel(locations: filteredPOILcations)
     }
 
-    func fetchData(minLat: Double, maxLat: Double, minLon: Double, maxLon: Double) async -> POILocations {
+    func fetchData(minLat: Double, maxLat: Double, minLon: Double, maxLon: Double) async -> POILocationsModel {
         return await POIRequest().makeRequest(minLat: minLat, maxLat: maxLat, minLon: minLon, maxLon: maxLon)
     }
 }

@@ -36,7 +36,7 @@ extension ViewController {
         view?.canShowCallout = true
         view?.clusteringIdentifier = "poiCluster"
 
-        if let poiAnno = annotation as? POIAnnotation {
+        if let poiAnno = annotation as? POIAnnotationModel {
             view?.image = iconForType(poiAnno.type)
     #if canImport(UIKit)
             let label = UILabel()
@@ -102,7 +102,7 @@ extension ViewController {
             let poiLocations = await fetchPOIAndCache.getPOI(minLat: minLat, maxLat: maxLat, minLon: minLon, maxLon: maxLon)
             var newAnnotations: [MKAnnotation] = []
             for poi in poiLocations.locations {
-                let annotation = POIAnnotation(
+                let annotation = POIAnnotationModel(
                     coordinate: CLLocationCoordinate2D(latitude: poi.lat, longitude: poi.lon),
                     title: poi.name,
                     subtitle: poi.content+"\n"+poi.additionalContent,

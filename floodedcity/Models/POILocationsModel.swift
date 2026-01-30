@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct POILocations: Codable {
+struct POILocationsModel: Codable {
     let locations: [Location]
 
     enum CodingKeys: String, CodingKey {

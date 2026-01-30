@@ -1,7 +1,7 @@
 import Foundation
 
 class POIRequest {
-    func makeRequest(minLat: Double, maxLat: Double, minLon: Double, maxLon: Double) async -> POILocations {
+    func makeRequest(minLat: Double, maxLat: Double, minLon: Double, maxLon: Double) async -> POILocationsModel {
         // Build URL by injecting the bounds into the endpoint, replacing the placeholders
         // "{minlat}", "{minlon}", "{maxlat}", "{maxlon}".
         let urlString = "\(AppConstants.poiEndpoint)\(minLat)/\(minLon)/\(maxLat)/\(maxLon)"
@@ -25,17 +25,17 @@ class POIRequest {
         }
     }
 
-    static func parsePOILocations(from data: Data) -> POILocations? {
+    static func parsePOILocations(from data: Data) -> POILocationsModel? {
         do {
             let decoder = JSONDecoder()
-            return try decoder.decode(POILocations.self, from: data)
+            return try decoder.decode(POILocationsModel.self, from: data)
         } catch {
             return nil
         }
     }
 
     // Provide a default/empty POILocations so the method can always return a value.
-    static func emptyPOILocations() -> POILocations {
-        return POILocations(locations: [])
+    static func emptyPOILocations() -> POILocationsModel {
+        return POILocationsModel(locations: [])
     }
 }

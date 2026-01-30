@@ -1,7 +1,7 @@
 import UIKit
 import MapKit
 
-final class POIAnnotation: NSObject, MKAnnotation {
+final class POIAnnotationModel: NSObject, MKAnnotation {
     let coordinate: CLLocationCoordinate2D
     let title: String?
     let subtitle: String?
