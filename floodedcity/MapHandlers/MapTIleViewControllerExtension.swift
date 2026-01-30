@@ -1,7 +1,35 @@
 import MapKit
+import UIKit
+import ObjectiveC
 
 extension ViewController {
     // MARK: map tiles
+
+    // Loading indicator for map tile loading state
+    private static var loadingIndicatorKey: UInt8 = 0
+
+    private var loadingIndicator: UIActivityIndicatorView {
+        if let indicator = objc_getAssociatedObject(self, &Self.loadingIndicatorKey) as? UIActivityIndicatorView {
+            return indicator
+        }
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        objc_setAssociatedObject(self, &Self.loadingIndicatorKey, indicator, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        return indicator
+    }
+
+    private func ensureLoadingIndicatorAdded() {
+        guard loadingIndicator.superview == nil else { return }
+        // Ensure mapView exists and is part of the view hierarchy
+        guard let mapView = self.mapView else { return }
+        mapView.addSubview(loadingIndicator)
+        NSLayoutConstraint.activate([
+            loadingIndicator.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: mapView.centerYAnchor)
+        ])
+    }
+
     func floodedCityTilePathTemplate(seaLevel: Int) -> String {
         return "\(AppConstants.tileEndpoint)\(seaLevel)"
     }
@@ -30,4 +58,28 @@ extension ViewController {
         }
         return MKOverlayRenderer(overlay: overlay)
     }
+    
+    
+    //tile loading error handling
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+//        print("Map tiles finished loading for the current view.")
+        // Perform actions here, e.g., show annotations or hide a loading indicator.
+        loadingIndicator.stopAnimating()
+    }
+
+    func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
+//        print("Map is starting to load tiles.")
+        // Show a loading indicator.
+        ensureLoadingIndicatorAdded()
+        loadingIndicator.startAnimating()
+    }
+
+    func mapViewDidFailLoadingMap(_ mapView: MKMapView, withError error: Error) {
+//        print("Map failed to load with error: \(error.localizedDescription)")
+        //TODO: refresh button to attempt reload - failing without actual error
+        //Likely timeout, but server logs show all calls received succeeding, probably timing with presentation layer being visible rather than server?
+        //Might be down to Apple's internal networking handling - logs show socket failure, so failing before it reaches server == timing?
+        loadingIndicator.stopAnimating()
+    }
+
 }
