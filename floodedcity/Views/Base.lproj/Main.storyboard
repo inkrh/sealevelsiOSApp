@@ -25,7 +25,7 @@
                             </mapView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" id="swA-hD-Z34">
                                 <rect key="frame" x="263" y="59" width="112" height="200"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" contentHorizontalAlignment="right" contentVerticalAlignment="top" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F3z-RD-KZ5" userLabel="sealevelsUpBtn">
                                         <rect key="frame" x="19" y="0.0" width="74" height="64"/>
